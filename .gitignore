@@ -1,0 +1,21 @@
+# secrets: never commit (use backend/.env.example as the template)
+.env
+**/.env
+!**/.env.example
+
+# local Python environment and caches
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# runtime data: index versions, embedding cache, feedback votes, uploads, eval runs, server logs
+**/data/
+*.log
+*.tmp
+
+# editor and OS files
+.idea/
+.vscode/
+.DS_Store

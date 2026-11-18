@@ -1,0 +1,87 @@
+# Same roles as dataset.yaml, but rows come from SPARQL instead of CSV.
+# Column names below are SPARQL variable names. The ll: vocabulary is a local stand-in;
+# for the target graph, rewrite the
+# queries against its ontology and keep the variable names.
+
+lessons:
+  sparql: |
+    # one row per lesson: single-valued fields with SAMPLE, multi-valued with GROUP_CONCAT,
+    # everything except the id optional (a lesson without a title gets one from its text)
+    PREFIX ll: <http://example.org/lessons#>
+    SELECT ?id (SAMPLE(?title_) AS ?title) (SAMPLE(?learning_) AS ?learning)
+           (SAMPLE(?created_) AS ?created) (SAMPLE(?impact_) AS ?impact) (SAMPLE(?user_rating_) AS ?user_rating)
+           (SAMPLE(?status_) AS ?status) (SAMPLE(?product_group_) AS ?product_group)
+           (SAMPLE(?process_) AS ?process) (SAMPLE(?location_) AS ?location)
+           (GROUP_CONCAT(DISTINCT ?stage_; separator=";") AS ?stage)
+           (GROUP_CONCAT(DISTINCT ?dep; separator=";") AS ?departments)
+           (GROUP_CONCAT(DISTINCT ?top; separator=";") AS ?topics)
+           (GROUP_CONCAT(DISTINCT ?pname; separator=";") AS ?projects)
+    WHERE {
+      ?l a ll:Lesson ; ll:id ?id .
+      OPTIONAL { ?l ll:title ?title_ }
+      OPTIONAL { ?l ll:learning ?learning_ }
+      OPTIONAL { ?l ll:created ?created_ }
+      OPTIONAL { ?l ll:impact ?impact_ }
+      OPTIONAL { ?l ll:userRating ?user_rating_ }
+      OPTIONAL { ?l ll:status ?status_ }
+      OPTIONAL { ?l ll:productGroup ?product_group_ }
+      OPTIONAL { ?l ll:process ?process_ }
+      OPTIONAL { ?l ll:location ?location_ }
+      OPTIONAL { ?l ll:stage ?stage_ }
+      OPTIONAL { ?l ll:department ?dep }
+      OPTIONAL { ?l ll:topic ?top }
+      OPTIONAL { ?l ll:affects/ll:project_name ?pname }
+    }
+    GROUP BY ?id
+    ORDER BY ?id
+  id: id
+  title: title
+  text: [learning]
+  context:
+    department: departments
+    product_group: product_group
+    process: process
+    topic: topics
+    location: location
+    stage: stage
+    project: projects
+  ranking:
+    impact: {column: impact, kind: number, max: 5, weight: 0.05}
+    user_rating: {column: user_rating, kind: number, max: 5, weight: 0}
+    recency: {column: created, kind: date, half_life_days: 1095, weight: 0}
+  filter:
+    status: [Approved]
+  multi_value:
+    stage: ";"
+    departments: ";"
+    topics: ";"
+    projects: ";"
+
+context_sources:
+  project:
+    # every literal property of a project, pivoted into one row per project
+    shape: key_value
+    sparql: |
+      PREFIX ll: <http://example.org/lessons#>
+      SELECT ?subject ?key ?value WHERE {
+        ?subject a ll:Project ; ?p ?value .
+        FILTER(isLiteral(?value))
+        BIND(STRAFTER(STR(?p), "#") AS ?key)
+      }
+      ORDER BY ?subject ?key ?value
+    id: project_id
+    name: project_name
+    lesson_column: project
+    match_on: name
+    text: [description, special_features]
+    compare:
+      platform: 3
+      vehicle_type: 3
+      goa_level: 2
+      customer: 2
+      operator: 1
+      is_new_design: 1
+      complexity: 1
+      country: 1
+      multi_supplier: 1
+      international: 1

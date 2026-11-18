@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body class="admin">
+  <header>
+    <div class="brand">
+      <h1>Admin</h1>
+      <span class="sub">Upload a new extract, map the columns, rebuild the index.</span>
+    </div>
+    <div class="header-right">
+      <input id="token" type="password" placeholder="Admin token" autocomplete="off">
+      <a href="/" class="pill">Open chat</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <section class="card" id="current">
+      <h2>Current index</h2>
+      <p class="muted" id="current-info">Enter the admin token to load.</p>
+      <div id="current-dims" class="chips"></div>
+    </section>
+
+    <section class="card">
+      <h2>1 · Upload</h2>
+      <form id="upload-form" class="row">
+        <input type="file" id="file" accept=".csv,.xlsx,.xlsm" required>
+        <label>Sheet <input id="sheet" placeholder="first sheet" size="10"></label>
+        <label>Header row <input id="header-row" type="number" value="1" min="1" style="width:4em"></label>
+        <button type="submit">Upload &amp; preview</button>
+      </form>
+      <p class="error" id="upload-error"></p>
+    </section>
+
+    <section class="card" id="mapping-card" hidden>
+      <h2>2 · Map the columns</h2>
+      <p class="muted" id="profile-info"></p>
+      <p class="muted small">Each column gets a role. <b>context</b> columns become filters and "why relevant" reasons; a new context column is a new dimension, no code change. Personal data defaults to <b>ignore</b>. <b>ranking</b> columns (ratings, scores, dates) are stored as named signals; new ones don't change the ranking until a weight is set in the mapping. A title column is optional. A column whose values name items of a context source (e.g. projects) is detected and gets that source's lesson column, so "comparable" works.</p>
+      <div class="table-wrap">
+        <table id="mapping">
+          <thead><tr><th>Column</th><th>Filled</th><th>Distinct</th><th>Examples</th><th>Role</th><th>Dimension</th><th>Split by</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="filters"></div>
+      <p class="error" id="mapping-error"></p>
+      <button id="ingest-btn" class="primary">Build index</button>
+    </section>
+
+    <section class="card" id="result-card" hidden>
+      <h2>3 · Result</h2>
+      <div id="result"></div>
+    </section>
+  </main>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>

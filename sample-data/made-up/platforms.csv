@@ -1,0 +1,6 @@
+platform_id,platform_name,vehicle_family,max_speed_kmh,automation_ready
+PL1,Urbano,Metro,90,true
+PL2,RegioFlex,Regional,160,false
+PL3,TramLink,Tram,70,false
+PL4,Velo HS,High-speed,320,false
+PL5,PowerLoco,Locomotive,140,false

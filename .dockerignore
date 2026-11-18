@@ -1,0 +1,9 @@
+# allow-list: the image gets only what it needs to run
+*
+!backend/app/
+!backend/config/
+!backend/requirements.txt
+!frontend/
+**/__pycache__
+**/*.pyc
+**/.env

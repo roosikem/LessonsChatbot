@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Talk to Lessons Learned</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>Talk to Lessons Learned</h1>
+      <span class="sub" id="tagline"></span>
+    </div>
+    <div class="header-right">
+      <span id="model" class="pill"></span>
+      <label id="debug-toggle" class="toggle" hidden><input type="checkbox" id="debug"> details</label>
+      <button id="new-chat" class="ghost">New chat</button>
+    </div>
+  </header>
+
+  <main id="thread">
+    <section id="welcome">
+      <p>Try one of these, or ask your own question:</p>
+      <div class="examples"></div>
+    </section>
+  </main>
+
+  <form id="ask">
+    <textarea id="question" rows="1" required></textarea>
+    <button type="submit" id="send">Ask</button>
+  </form>
+
+  <template id="lesson-tpl">
+    <article class="lesson">
+      <div class="lesson-head">
+        <span class="lesson-id"></span>
+        <h3></h3>
+        <span class="confidence"></span>
+      </div>
+      <p class="learning"></p>
+      <ul class="reasons"></ul>
+      <blockquote class="quote"></blockquote>
+      <details class="original">
+        <summary>Original entry</summary>
+        <p class="original-text"></p>
+        <dl class="context"></dl>
+      </details>
+      <div class="lesson-actions">
+        <button class="ghost related-btn" hidden>Related lessons</button>
+        <span class="spacer"></span>
+        <button class="vote" data-vote="up" title="Useful">👍</button>
+        <button class="vote" data-vote="down" title="Not relevant">👎</button>
+      </div>
+      <div class="related"></div>
+    </article>
+  </template>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+supplier_id,supplier_name,category,country,size,certified_rail
+S01,Portalis Doors,Doors,Altheria,Medium,true
+S02,Klimatek,HVAC,Gallora,Large,true
+S03,SignalOne,Signalling,Istrava,Large,true
+S04,BogieWorks,Bogies,Hestria,Medium,true
+S05,Interio Panels,Interiors,Joravia,Small,false
+S06,Contact Rail Parts,Pantograph,Dorvania,Small,true
+S07,DoorTec Systems,Doors,Kelmora,Small,true

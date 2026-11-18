@@ -1,0 +1,43 @@
+# Wording and word lists for this deployment. Change these for another domain or data set;
+# no code change needed. Dimension and context-source names always come from the data itself.
+
+app_name: Talk to Lessons Learned
+tagline: Describe your situation. Get what earlier projects learned.
+
+# first lines of the answer prompt
+intro: You help engineers and managers reuse lessons learned from earlier projects.
+# what "the user's situation" is made of, used in the prompt and the clarifying rules
+situation: role, project, component, phase, problem
+
+clarify_question: >-
+  Could you tell me a bit more about your situation: the project, the component or phase
+  you're working on, or the problem you're facing?
+no_match_text: I couldn't find a lesson in the data that clearly matches this question.
+related_only_text: No lesson matches this directly. These are related and might still help.
+filtered_summary_text: These lessons from earlier projects fit your situation best.
+
+# chat page
+placeholder: e.g. We are in type testing and the brakes failed. What did others learn?
+examples:
+  - label: "Project: new metro line"
+    question: I am starting commissioning on Valoria Metro Line 5. What should I learn from comparable projects?
+  - label: "Component: doors"
+    question: I am responsible for the door system. Which lessons learned should I consider?
+  - label: "Problem: faults after software updates"
+    question: We keep getting faults on site after software updates. Has this happened before and what did teams learn?
+  - label: Recurring issues
+    question: Which issues keep coming back during commissioning?
+
+# a first question made only of these words is too vague to search
+filler_words: >-
+  a an and any anything are about all at be can could do does for from give have hello help hey hi how i
+  in is it lesson lessons learn learned learnt me my of on or our please show some something tell that the
+  there this to us we what which with would you your info information experience experiences
+
+# ignored by keyword search
+stopwords: a an and are as at be by for from has have in is it of on or our the to was we were what which with
+
+# upload page: column names that look like personal data (default role "ignore")
+personal_column_hints: [person, contact, rated by, author, owner, email, e-mail, phone, name of]
+# upload page: status values ticked by default for a filter column
+keep_status_values: [approved, closed, released, final]

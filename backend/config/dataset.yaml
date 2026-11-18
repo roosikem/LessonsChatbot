@@ -1,0 +1,52 @@
+# Dataset mapping. The code only knows roles; column names live here.
+# Paths are relative to the repo root.
+
+lessons:
+  file: sample-data/made-up/overall_list.csv
+  delimiter: ","
+  id: ID
+  title: Title
+  text: [Lesson]
+  context:
+    department: Departments
+    product_group: Product group
+    process: Process
+    topic: Topic
+    location: Location
+    stage: Project stage
+    project: Projects
+  ranking:
+    # any number of signals; weight 0 = shown/kept but doesn't change the ranking
+    impact: {column: Impact (0-5), kind: number, max: 5, weight: 0.05}
+    user_rating: {column: User rating, kind: number, max: 5, weight: 0}
+    recency: {column: Created, kind: date, half_life_days: 1095, weight: 0}
+  filter:
+    Status: [Approved]
+  multi_value:
+    Departments: ";"
+    Topic: ";"
+    Projects: ";"
+  ignore: [Contact person, Rated by, Main project]
+
+context_sources:
+  # Any number of extra tables (context or reference files), each linked to the lessons
+  # through one lesson context column. Add a block per file; none at all is fine too.
+  project:
+    file: sample-data/made-up/projects.csv
+    id: project_id
+    name: project_name
+    lesson_column: project        # lesson context dimension whose values name these items
+    match_on: name                # name | id: what the lesson column contains
+    text: [description, special_features]
+    compare:                      # weight per attribute for "comparable"; leave out for pure reference lists
+      platform: 3
+      vehicle_type: 3
+      goa_level: 2
+      customer: 2
+      operator: 1
+      is_new_design: 1
+      complexity: 1
+      country: 1
+      multi_supplier: 1
+      international: 1
+    # references: {platform: platform}   # optional: column -> another context source (hierarchies)
